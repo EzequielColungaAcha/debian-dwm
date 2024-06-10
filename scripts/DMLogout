@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+
+. "${HOME}/.cache/wal/colors.sh"
+
+declare -a options=(
+    "Reboot"
+    "Shutdown"
+    "Exit"
+)
+
+choice=$( printf '%s\n' "${options[@]}" | dmenu -fn JetBrainsMonoNerdFont -nb $color0 -nf $color7 -sb $color7 -sf $color0 -i  -l 10)
+
+case "$choice" in
+    "Reboot") rbt ;;
+    "Shutdown") std ;;
+    "Exit") exit 1 ;;
+esac

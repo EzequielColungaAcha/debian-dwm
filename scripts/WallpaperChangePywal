@@ -1,0 +1,13 @@
+#!/usr/bin/bash
+WALLPAPER=$(find ~/Downloads -type f | shuf -n 1)
+wal -i $WALLPAPER
+feh --bg-scale $WALLPAPER
+xdotool key alt+F5
+# cd ~/.suckless/dwm
+# make
+# cd ~/.suckless/st
+# make
+# cd ~/.suckless/dmenu
+# sudo make clean install
+# echo $WALLPAPER
+#killall st
