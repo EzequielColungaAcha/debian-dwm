@@ -2,8 +2,8 @@
 
 export PATH=$HOME/.local/bin:$PATH
 
-wal -R
 xrandr -s 1920x1080
+wal -R
 
 echo "no" > $HOME/.cache/wmExit
 slstatus &

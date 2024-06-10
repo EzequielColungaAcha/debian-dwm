@@ -16,7 +16,7 @@ curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o 
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 echo "Docker key added"
 sudo nala update
-sudo nala install google-chrome-stable code apt-transport-https ca-certificates gnupg docker-ce docker-ce-cli containerd.io docker-buildx-plugin python3 python3-pip imagemagick procps psmisc xdotool xsel feh libxfixes-dev fonts-jetbrains-mono -y
+sudo nala install google-chrome-stable code apt-transport-https ca-certificates gnupg docker-ce docker-ce-cli containerd.io docker-buildx-plugin python3 python3-pip imagemagick procps psmisc xdotool xsel feh libxfixes-dev picom -y
 ln -s $(which fdfind) ~/.local/bin/fd
 sudo usermod -aG docker ${USER}
 sudo chmod 666 /var/run/docker.sock
@@ -38,6 +38,10 @@ cd ~/.local/src/st
 make
 ln -sf ~/.local/src/st/st ~/.local/bin/
 echo "st ready"
+cd ~/.local/src/slstatus
+make
+ln -sf ~/.local/src/slstatus/slstatus ~/.local/bin/
+echo "slstatus ready"
 cd ~/.local/src/dmenu
 sudo make clean install
 echo "dmenu ready"
