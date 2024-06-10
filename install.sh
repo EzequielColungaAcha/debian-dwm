@@ -16,13 +16,20 @@ curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o 
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 echo "Docker key added"
 sudo nala update
-sudo nala install google-chrome-stable code apt-transport-https ca-certificates gnupg docker-ce docker-ce-cli containerd.io docker-buildx-plugin python3 python3-pip imagemagick procps psmisc xdotool xsel feh libxfixes-dev -y
+sudo nala install google-chrome-stable code apt-transport-https ca-certificates gnupg docker-ce docker-ce-cli containerd.io docker-buildx-plugin python3 python3-pip imagemagick procps psmisc xdotool xsel feh libxfixes-dev fonts-jetbrains-mono -y
 ln -s $(which fdfind) ~/.local/bin/fd
 sudo usermod -aG docker ${USER}
 sudo chmod 666 /var/run/docker.sock
 echo "Chrome, VsCode and Docker installed"
-mv ~/debian-dwm/src ~/.local/
+sudo pip3 install pywal --break-system-packages
+mkdir -p ~/.local/src
+mv ~/debian-dwm/src/* ~/.local/src/
 mkdir -p ~/.local/bin
+mv ~/debian-dwm/scripts/* ~/.local/bin/
+mkdir -p ~/.local/wallpapers
+mv ~/debian-dwm/wallpapers/* ~/.local/wallpapers
+WALLPAPER=$(find ~/.local/wallpapers -type f | shuf -n 1)
+wal -i $WALLPAPER
 cd ~/.local/src/dwm
 make
 ln -sf ~/.local/src/dwm/dwm ~/.local/bin/
@@ -41,8 +48,5 @@ sudo make clean install
 cd ~/
 rm ~/.xinitrc
 mv ~/debian-dwm/.xinitrc ~/.xinitrc
-mv ~/debian-dwm/scripts/* ~/.local/bin
 curl https://get.volta.sh | bash
 echo "Don't forget to install node and yarn with 'volta install node yarn'"
-startx &
-st -e volta install node yarn
