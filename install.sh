@@ -16,8 +16,8 @@ curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o 
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 echo "Docker key added"
 sudo nala update
-sudo nala install google-chrome-stable code apt-transport-https ca-certificates gnupg docker-ce docker-ce-cli containerd.io docker-buildx-plugin python3 python3-pip imagemagick procps psmisc xdotool xsel feh libxfixes-dev picom -y
-ln -s $(which fdfind) ~/.local/bin/fd
+sudo nala install google-chrome-stable code apt-transport-https ca-certificates gnupg docker-ce docker-ce-cli containerd.io docker-buildx-plugin python3 python3-pip imagemagick procps psmisc xdotool xsel feh libxfixes-dev picom network-manager-gnome tree zoxide trash-cli bash-completion fzf -y
+# ln -s $(which fdfind) ~/.local/bin/fd
 sudo usermod -aG docker ${USER}
 sudo chmod 666 /var/run/docker.sock
 echo "Chrome, VsCode and Docker installed"
@@ -30,6 +30,10 @@ mkdir -p ~/.local/wallpapers
 mv ~/debian-dwm/wallpapers/* ~/.local/wallpapers
 WALLPAPER=$(find ~/.local/wallpapers -type f | shuf -n 1)
 wal -i $WALLPAPER
+mkdir -p ~/.local/share/fonts
+mv ~/debian-dwm/fonts/* ~/.local/share/fonts/
+rm ~/.bashrc
+mv ~/debian-dwm/.bashrc ~/
 cd ~/.local/src/dwm
 make
 ln -sf ~/.local/src/dwm/dwm ~/.local/bin/
@@ -54,3 +58,4 @@ rm ~/.xinitrc
 mv ~/debian-dwm/.xinitrc ~/.xinitrc
 curl https://get.volta.sh | bash
 echo "Don't forget to install node and yarn with 'volta install node yarn'"
+rm ~/debian-dwm

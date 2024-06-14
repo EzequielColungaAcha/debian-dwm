@@ -9,16 +9,15 @@ echo "no" > $HOME/.cache/wmExit
 slstatus &
 picom &
 clipmenud &
+nm-applet &
 
 while true
 do
-
     wmExit=$(cat $HOME/.cache/wmExit)
     if [ $wmExit = "yes" ]
     then
         exit
     else
-        # np-applet &
         dwm ;
     fi
 done

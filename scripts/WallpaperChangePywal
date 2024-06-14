@@ -1,5 +1,14 @@
 #!/usr/bin/bash
-WALLPAPER=$(find ~/.local/wallpapers -type f | shuf -n 1)
-wal -i $WALLPAPER
-feh --bg-scale $WALLPAPER
-xdotool key alt+F5
+CURRENT_WALLPAPER=$(cat ~/.cache/wal/wal)
+while true
+do
+    WALLPAPER=$(find ~/Downloads -type f | shuf -n 1)
+    if [ $CURRENT_WALLPAPER != $WALLPAPER ]
+    then
+        wal -i $WALLPAPER
+        feh --bg-scale $WALLPAPER
+        killall nm-applet; nm-applet &
+        xdotool key alt+F5
+        exit
+    fi
+done
