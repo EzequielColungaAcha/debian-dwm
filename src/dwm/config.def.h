@@ -18,7 +18,12 @@ static const int topbar             = 0;        /* 0 means bottom bar */
 static const int focusonwheel       = 0;
 static const char *fonts[]          = { "JetBrainsMonoNerdFont:size=12" };
 static const char dmenufont[]       = "JetBrainsMonoNerdFont:size=12";
-#include ~/.cache/wal/colors-wal-dwm.h
+static char normbgcolor[]           = "#222222";
+static char normbordercolor[]       = "#444444";
+static char normfgcolor[]           = "#bbbbbb";
+static char selfgcolor[]            = "#eeeeee";
+static char selbordercolor[]        = "#005577";
+static char selbgcolor[]            = "#005577";
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
