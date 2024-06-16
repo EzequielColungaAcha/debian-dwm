@@ -23,17 +23,17 @@ sudo chmod 666 /var/run/docker.sock
 echo "Chrome, VsCode and Docker installed"
 sudo pip3 install pywal --break-system-packages
 mkdir -p ~/.local/src
-mv ~/debian-dwm/src/* ~/.local/src/
+cp ~/debian-dwm/src/* ~/.local/src/
 mkdir -p ~/.local/bin
-mv ~/debian-dwm/scripts/* ~/.local/bin/
+cp ~/debian-dwm/scripts/* ~/.local/bin/
 mkdir -p ~/.local/wallpapers
-mv ~/debian-dwm/wallpapers/* ~/.local/wallpapers
+cp ~/debian-dwm/wallpapers/* ~/.local/wallpapers
 WALLPAPER=$(find ~/.local/wallpapers -type f | shuf -n 1)
 wal -i $WALLPAPER
 mkdir -p ~/.local/share/fonts
-mv ~/debian-dwm/fonts/* ~/.local/share/fonts/
+cp ~/debian-dwm/fonts/* ~/.local/share/fonts/
 rm ~/.bashrc
-mv ~/debian-dwm/.bashrc ~/
+cp ~/debian-dwm/.bashrc ~/
 cd ~/.local/src/dwm
 make
 ln -sf ~/.local/src/dwm/dwm ~/.local/bin/
@@ -55,7 +55,8 @@ cd ~/.local/src/clipnotify
 sudo make clean install
 cd ~/
 rm ~/.xinitrc
-mv ~/debian-dwm/.xinitrc ~/.xinitrc
+cp ~/debian-dwm/.xinitrc ~/.xinitrc
 curl https://get.volta.sh | bash
 echo "Don't forget to install node and yarn with 'volta install node yarn'"
+cd ~
 rm ~/debian-dwm
