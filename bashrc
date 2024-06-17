@@ -1,1 +1,0 @@
-/home/ezziel/mybash/.bashrc
