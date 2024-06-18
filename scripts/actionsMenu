@@ -3,6 +3,11 @@
 . "${HOME}/.cache/wal/colors.sh"
 
 declare -a options=(
+    "Clipboard"
+    "Code Canid"
+    "Pavucontrol"
+    "Change Wallpaper"
+    "Mount Archivos"
     "Reboot"
     "Shutdown"
     "Exit"
@@ -11,6 +16,11 @@ declare -a options=(
 choice=$( printf '%s\n' "${options[@]}" | dmenu -fn JetBrainsMonoNerdFont -nb $color0 -nf $color7 -sb $color7 -sf $color0 -i  -l 10)
 
 case "$choice" in
+    "Clipboard") clipmenu ;;
+    "Code Canid") exit 1 ;;
+    "Pavucontrol") pavucontrol ;;
+    "Change Wallpaper") wallpaperChangePywal ;;
+    "Mount Archivos") mountArchivos ;;
     "Reboot") rbt ;;
     "Shutdown") std ;;
     "Exit") exit 1 ;;

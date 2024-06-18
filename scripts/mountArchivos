@@ -1,0 +1,2 @@
+#!/usr/bin/bash
+sudo mount /dev/nvme1n1p4 /mnt/Archivos/
