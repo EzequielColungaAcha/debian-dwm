@@ -1,0 +1,21 @@
+#!/usr/bin/bash
+
+. "${HOME}/.cache/wal/colors.sh"
+
+declare -a options=(
+    "Notebook 1080p"
+    "Notebook 1080p + 4k Monitor"
+    "Notebook 1080p + 4k Monitor + 1080p Monitor"
+    "4k Monitor Only"
+    "Exit"
+)
+
+choice=$( printf '%s\n' "${options[@]}" | dmenu -fn JetBrainsMonoNerdFont -nb $color0 -nf $color7 -sb $color7 -sf $color0 -i  -l 10)
+
+case "$choice" in
+    "Notebook 1080p") notebook.sh ;;
+    "Notebook 1080p + 4k Monitor") 4k+notebook.sh ;;
+    "Notebook 1080p + 4k Monitor + 1080p Monitor") 3-mon.sh ;;
+    "4k Monitor Only") 4k-mon.sh ;;
+    "Exit") exit 1 ;;
+esac

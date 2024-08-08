@@ -85,6 +85,10 @@ alias web='cd /var/www/html'
 # To temporarily bypass an alias, we precede the command with a \
 # EG: the ls command is aliased, but to use the normal ls command you would type \ls
 
+# lazygit & lazydocker aliases
+alias lzg='lazygit'
+alias lzd='lazydocker'
+
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -94,6 +98,9 @@ alias hlp='less ~/.bashrc_help'
 
 # alias to show the date
 alias da='date "+%Y-%m-%d %A %T %Z"'
+
+# alias for batcat
+alias cat="batcat"
 
 # Alias's to modified commands
 alias cp='cp -i'
@@ -387,3 +394,11 @@ bind '"\C-f":"zi\n"'
 
 eval "$(zoxide init bash)"
 PROMPT_COMMAND='printf "\033]0;%s%s%s\007" "${PWD/#$HOME/"~"}"'
+
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
+export PS1='\[\e[38;5;51m\]\w \[\e[38;5;211m\]$(parse_git_branch)\[\e[00m\] '
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"

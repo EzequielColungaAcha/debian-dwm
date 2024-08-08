@@ -16,8 +16,8 @@ curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o 
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 echo "Docker key added"
 sudo nala update
-sudo nala install google-chrome-stable code apt-transport-https ca-certificates gnupg docker-ce docker-ce-cli containerd.io docker-buildx-plugin python3 python3-pip imagemagick procps psmisc xdotool xsel feh libxfixes-dev picom network-manager-gnome tree zoxide trash-cli bash-completion fzf arandr thunar pulseaudio pavucontrol ntfs-3g -y
-# ln -s $(which fdfind) ~/.local/bin/fd
+sudo nala install google-chrome-stable code apt-transport-https ca-certificates gnupg docker-ce docker-ce-cli containerd.io docker-buildx-plugin python3 python3-pip imagemagick procps psmisc xdotool xsel feh libxfixes-dev picom network-manager-gnome tree zoxide trash-cli bash-completion fzf arandr thunar pulseaudio pavucontrol ntfs-3g fd-find -y
+ln -s $(which fdfind) ~/.local/bin/fd
 sudo usermod -aG docker ${USER}
 sudo chmod 666 /var/run/docker.sock
 echo "Chrome, VsCode and Docker installed"
@@ -56,6 +56,13 @@ sudo make clean install
 cd ~/
 rm ~/.xinitrc
 cp ~/debian-dwm/.xinitrc ~/.xinitrc
+cd ~/.local/src/
+LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+tar xf lazygit.tar.gz lazygit
+sudo install lazygit /usr/local/bin
+rm lazygit.tar.gz
+curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
 curl https://get.volta.sh | bash
 echo "Don't forget to install node and yarn with 'volta install node yarn'"
 cd ~

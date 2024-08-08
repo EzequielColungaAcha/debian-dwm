@@ -9,7 +9,11 @@ echo "no" > $HOME/.cache/wmExit
 slstatus &
 picom &
 clipmenud &
-nm-applet &
+dunst &
+#systemctl status {systemd-networkd,systemd-resolved,networking,NetworkManager,systemd-hostnamed,openvpn} |egrep -v 'man:|http'
+#systemctl disable --now networking.service
+#systemctl restart NetworkManager.service
+wallpaperChangePywal
 
 while true
 do

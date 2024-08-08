@@ -6,6 +6,7 @@ declare -a options=(
     "Clipboard"
     "Code Canid"
     "Pavucontrol"
+    "Monitor Menu"
     "Change Wallpaper"
     "Mount Archivos"
     "Reboot"
@@ -19,6 +20,7 @@ case "$choice" in
     "Clipboard") clipmenu ;;
     "Code Canid") exit 1 ;;
     "Pavucontrol") pavucontrol ;;
+    "Monitor Menu") monitorMenu ;;
     "Change Wallpaper") wallpaperChangePywal ;;
     "Mount Archivos") mountArchivos ;;
     "Reboot") rbt ;;
