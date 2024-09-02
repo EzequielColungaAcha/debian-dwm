@@ -76,6 +76,7 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod1Mask
+#define WINKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -91,6 +92,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", normbgco
 static const char *termcmd[]  = { "st", NULL };
 static const char *wallpaperChangePywal[] = { "wallpaperChangePywal", NULL};
 static const char *actionsMenu[] = { "actionsMenu", NULL};
+static const char *keyboardLayoutToggle[] = { "keyboardLayoutToggle", NULL};
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -98,6 +100,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask|ControlMask, XK_Return, spawn,          {.v = wallpaperChangePywal } },
 	{ MODKEY|ShiftMask,             XK_x,      spawn,          {.v = actionsMenu } },
+	{ WINKEY,                       XK_space,  spawn,          {.v = keyboardLayoutToggle } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstackvis,  {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstackvis,  {.i = -1 } },

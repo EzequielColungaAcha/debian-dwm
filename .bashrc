@@ -1,4 +1,38 @@
 #!/bin/bash
+set meta-flag on
+set input-meta on
+set output-meta on
+set convert-meta off
+set completion-ignore-case on
+set completion-prefix-display-length 2
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
+# Immediately add a trailing slash when autocompleting symlinks to directories
+set mark-symlinked-directories on
+
+# Do not autocomplete hidden files unless the pattern explicitly begins with a dot
+set match-hidden-files off
+
+# Show all autocomplete results at once
+set page-completions off
+
+# If there are more than 200 possible completions for a word, ask to show them all
+set completion-query-items 200
+
+# Show extra file information when completing, like `ls -F` does
+set visible-stats on
+
+# Be more intelligent when autocompleting by also looking at the text after
+# the cursor. For example, when the current line is "cd ~/src/mozil", and
+# the cursor is on the "z", pressing Tab will not autocomplete it to "cd
+# ~/src/mozillail", but to "cd ~/src/mozilla". (This is supported by the
+# Readline used by Bash 4.)
+set skip-completed-text on
+
+# Coloring for Bash 4 tab completions.
+set colored-stats on
+
 iatest=$(expr index "$-" i)
 
 # Source global definitions
@@ -115,8 +149,8 @@ alias apt-get='sudo apt-get'
 alias freshclam='sudo freshclam'
 
 # Change directory aliases
+# alias cd='z'
 alias home='cd ~'
-alias cd..='cd ..'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -130,19 +164,20 @@ alias rmd='/bin/rm  --recursive --force --verbose '
 
 # Alias's for multiple directory listing commands
 alias la='ls -Alh'                # show hidden files
-alias ls='ls -aFh --color=always' # add colors and file type extensions
+alias ls='eza -lh --group-directories-first --icons' # add colors and file type extensions
 alias lx='ls -lXBh'               # sort by extension
 alias lk='ls -lSrh'               # sort by size
 alias lc='ls -lcrh'               # sort by change time
 alias lu='ls -lurh'               # sort by access time
 alias lr='ls -lRh'                # recursive ls
-alias lt='ls -ltrh'               # sort by date
+alias lt='eza --tree --level=2 --long --icons --git'               # sort by date
 alias lm='ls -alh |more'          # pipe through 'more'
 alias lw='ls -xAh'                # wide listing format
 alias ll='ls -Fls'                # long listing format
 alias labc='ls -lap'              #alphabetical sort
 alias lf="ls -l | egrep -v '^d'"  # files only
 alias ldir="ls -l | egrep '^d'"   # directories only
+alias fd='fdfind'
 
 # alias chmod commands
 alias mx='chmod a+x'

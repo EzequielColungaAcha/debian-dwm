@@ -10,6 +10,7 @@ slstatus &
 picom &
 clipmenud &
 dunst &
+pasystray &
 #systemctl status {systemd-networkd,systemd-resolved,networking,NetworkManager,systemd-hostnamed,openvpn} |egrep -v 'man:|http'
 #systemctl disable --now networking.service
 #systemctl restart NetworkManager.service
