@@ -4,10 +4,10 @@
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
-static const unsigned int gappih    = 5;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappih    = 1;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 1;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 1;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 1;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft  = 0;   /* 0: systray in the right corner, >0: systray on left of status text */
@@ -93,9 +93,18 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *wallpaperChangePywal[] = { "wallpaperChangePywal", NULL};
 static const char *actionsMenu[] = { "actionsMenu", NULL};
 static const char *keyboardLayoutToggle[] = { "keyboardLayoutToggle", NULL};
+#include <X11/XF86keysym.h>
+static const char *mutevol[] 			= { "volume", "--toggle",  NULL };
+static const char *mutemic[] 			= { "volume", "--toggle-mic",  NULL };
+static const char *upvol[]   			= { "volume", "--inc",  	NULL };
+static const char *downvol[] 			= { "volume", "--dec",    	NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ 0, 						XF86XK_AudioMute, 			spawn, {.v = mutevol } },
+	{ 0, 						XF86XK_AudioMicMute, 		spawn, {.v = mutemic } },
+	{ 0, 						XF86XK_AudioLowerVolume, 	spawn, {.v = downvol } },
+	{ 0, 						XF86XK_AudioRaiseVolume, 	spawn, {.v = upvol   } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask|ControlMask, XK_Return, spawn,          {.v = wallpaperChangePywal } },

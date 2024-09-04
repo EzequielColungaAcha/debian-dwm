@@ -8,6 +8,7 @@ do
         wal -i $WALLPAPER
         feh --bg-scale $WALLPAPER
         killall nm-applet; nm-applet &
+        killall pasystray; pasystray &
         xdotool key alt+F5
         exit
     fi
