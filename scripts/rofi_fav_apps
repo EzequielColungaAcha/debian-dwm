@@ -1,0 +1,2 @@
+#!/usr/bin/bash
+rofi -show drun -drun-categories DWM -theme ~/.config/rofi/themes/rofi_fav_apps_theme.rasi

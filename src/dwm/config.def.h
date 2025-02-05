@@ -32,22 +32,23 @@ static char *colors[][3] = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "󰨞", "", "", "" };
+static const char *tags[] = { "", "󰨞", "", "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
-	{ "google-chrome", NULL, NULL,         1 << 3,    0,          0,          -1,        -1 },
-	{ "st-256color",NULL,  NULL,           0,         0,          1,           0,        -1 },
-	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+	/* class             instance    title            tags mask  isfloating  isterminal  noswallow  monitor */
+	{ "Gimp",            NULL,       NULL,            0,         1,          0,          0,         -1 },
+	{ "google-chrome",   NULL,       NULL,            1 << 3,    0,          0,         -1,         -1 },
+	{ "st-256color",     NULL,       NULL,            0,         0,          1,          0,         -1 },
+	{ "alacritty",       NULL,       NULL,            0,         0,          1,          0,         -1 },
+	{ NULL,              NULL,       "Event Tester",  0,         0,          0,          1,         -1 }, /* xev */
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -89,11 +90,15 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
-static const char *rofiapps[] = { "rofi", "-show", "drun", "-theme", "~/.config/rofi/themes/rofi_apps_theme.rasi", NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *allApps[] = { "rofi_all_apps", NULL };
+static const char *favApps[] = { "rofi_fav_apps", NULL };
+static const char *powerMenu[] = { "rofi_powermenu", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
 static const char *wallpaperChangePywal[] = { "wallpaperChangePywal", NULL};
 static const char *actionsMenu[] = { "actionsMenu", NULL};
 static const char *keyboardLayoutToggle[] = { "keyboardLayoutToggle", NULL};
+static const char *flameshot[] = { "flameshot", "gui", NULL};
+static const char *slock[] = { "slock", NULL};
 #include <X11/XF86keysym.h>
 static const char *mutevol[] 			= { "volume", "--toggle",  NULL };
 static const char *mutemic[] 			= { "volume", "--toggle-mic",  NULL };
@@ -106,12 +111,16 @@ static const Key keys[] = {
 	{ 0, 						    XF86XK_AudioMicMute, 		spawn,          {.v = mutemic } },
 	{ 0, 						    XF86XK_AudioLowerVolume, 	spawn,          {.v = downvol } },
 	{ 0, 						    XF86XK_AudioRaiseVolume, 	spawn,          {.v = upvol   } },
-	{ MODKEY,                       XK_a,                       spawn,          {.v = rofiapps } },
+	{ 0,                            XK_Super_L,                 spawn,          {.v = favApps } },
+	{ 0,                            XK_Print,                   spawn,          {.v = flameshot } },
+	{ MODKEY|ShiftMask|ControlMask, XK_l,                       spawn,          {.v = slock } },
+	{ MODKEY,                       XK_a,                       spawn,          {.v = allApps } },
 	{ MODKEY,                       XK_p,                       spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return,                  spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask|ControlMask, XK_Return,                  spawn,          {.v = wallpaperChangePywal } },
 	{ MODKEY|ShiftMask,             XK_x,                       spawn,          {.v = actionsMenu } },
-	{ WINKEY,                       XK_space,                   spawn,          {.v = keyboardLayoutToggle } },
+	{ MODKEY|ShiftMask|ControlMask, XK_x,                       spawn,          {.v = powerMenu } },
+	{ MODKEY,                       XK_space,                   spawn,          {.v = keyboardLayoutToggle } },
 	{ MODKEY,                       XK_b,                       togglebar,      {0} },
 	{ MODKEY,                       XK_j,                       focusstackvis,  {.i = +1 } },
 	{ MODKEY,                       XK_k,                       focusstackvis,  {.i = -1 } },
@@ -144,9 +153,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_Tab,                     view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,                       killclient,     {0} },
 	{ MODKEY,                       XK_t,                       setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,                       setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,                       setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,                   setlayout,      {0} },
+	{ MODKEY,                       XK_f,                       setlayout,      {.v = &layouts[10]} },
+	{ MODKEY,                       XK_m,                       setlayout,      {.v = &layouts[1]} },
 	{ MODKEY|ShiftMask,             XK_space,                   togglefloating, {0} },
 	{ MODKEY,                       XK_0,                       view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,                       tag,            {.ui = ~0 } },
@@ -158,6 +166,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_s,                       show,           {0} },
 	{ MODKEY|ShiftMask|ControlMask, XK_s,                       showall,        {0} },
 	{ MODKEY|ShiftMask|ControlMask, XK_h,                       hide,           {0} },
+	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
 	TAGKEYS(                        XK_1,                                       0)
 	TAGKEYS(                        XK_2,                                       1)
 	TAGKEYS(                        XK_3,                                       2)

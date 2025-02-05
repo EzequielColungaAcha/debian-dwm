@@ -18,7 +18,7 @@ choice=$( printf '%s\n' "${options[@]}" | dmenu -fn JetBrainsMonoNerdFont -nb $c
 
 case "$choice" in
     "Clipboard") clipmenu ;;
-    "Code Canid") exit 1 ;;
+    "Code Canid") canid ;;
     "Pavucontrol") pavucontrol ;;
     "Monitor Menu") monitorMenu ;;
     "Change Wallpaper") wallpaperChangePywal ;;

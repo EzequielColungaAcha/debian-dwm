@@ -1,0 +1,2 @@
+#!/usr/bin/bash
+lerna clean -y && lerna bootstrap

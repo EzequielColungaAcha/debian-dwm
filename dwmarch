@@ -1,0 +1,95 @@
+#!/usr/bin/bash
+
+thisFolder=$(dirname "$(realpath "$0")")
+
+# Update the system and install base dependencies
+sudo pacman -Syu --noconfirm
+sudo pacman -S --noconfirm base-devel xorg git wget curl libx11 libxft libxinerama zip xorg-server xorg-xinit xorg-xprop libxcb make gcc pkg-config
+
+echo "Base X installed"
+
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+
+# Installing the necessary tools
+sudo pacman -S --noconfirm gpg
+
+# Install chrome (using AUR via yay)
+yay -S --noconfirm google-chrome
+
+# Install VSCode (using AUR via yay)
+yay -S --noconfirm visual-studio-code-bin
+
+# Install Docker (official Arch package)
+sudo pacman -S --noconfirm docker
+
+# Docker setup
+sudo systemctl enable --now docker
+sudo usermod -aG docker ${USER}
+sudo chmod 666 /var/run/docker.sock
+echo "Docker setup completed"
+
+# Install other packages
+sudo pacman -S --noconfirm python python-pip imagemagick procps psmisc xdotool xsel feh picom networkmanager tree trash-cli bash-completion fzf ripgrep bat eza zoxide plocate btop fd tldr arandr pulseaudio pavucontrol ntfs-3g libnotify dunst pasystray glow libglib2.0 pulsemixer alacritty flameshot vlc pcmanfm
+
+# Create symbolic links
+ln -s $(which fdfind) ~/.local/bin/fd
+
+# Set up the user environment
+mkdir -p ~/.local/bin
+ln -sf $thisFolder/scripts/* ~/.local/bin/
+ln -sf $thisFolder/wallpapers ~/.local/
+WALLPAPER=$(find ~/.local/wallpapers -type f | shuf -n 1)
+wal -i $WALLPAPER
+mkdir -p ~/.local/share/fonts
+ln -sf $thisFolder/fonts/* ~/.local/share/fonts/
+
+# Set up bashrc
+rm ~/.bashrc
+ln -sf $thisFolder/.bashrc ~/
+
+# Install DWM and other programs from source
+cd $thisFolder/src/dwm
+make
+ln -sf $thisFolder/src/dwm/dwm ~/.local/bin/
+echo "dwm ready"
+
+cd $thisFolder/src/st
+make
+ln -sf $thisFolder/src/st/st ~/.local/bin/
+echo "st ready"
+
+cd $thisFolder/src/slstatus
+make
+ln -sf $thisFolder/src/slstatus/slstatus ~/.local/bin/
+echo "slstatus ready"
+
+cd $thisFolder/src/dmenu
+sudo make clean install
+echo "dmenu ready"
+
+cd $thisFolder/src/clipmenu
+sudo make clean install
+
+cd $thisFolder/src/clipnotify
+sudo make clean install
+
+# Set up X session and interfaces
+rm ~/.xinitrc
+ln -sf $thisFolder/.xinitrc ~/.xinitrc
+
+# Install LazyGit
+sudo pacman -S lazygit
+
+# Install LazyDocker
+yay -S lazydocker
+
+# Install Volta
+curl https://get.volta.sh | bash
+
+echo "Don't forget to install node and yarn with 'volta install node yarn'"
+
+# Network interface setup
+sudo mv /etc/netctl/interfaces /etc/netctl/interfaces.bak
+sudo ln -sf $thisFolder/interfaces /etc/netctl/

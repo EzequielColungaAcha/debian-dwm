@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
+
+killall slstatus && slstatus &
+killall picom && picom &
+killall clipmenud && clipmenud &
+killall dunst && dunst &
+killall pasystray && pasystray &
+killall flameshot && flameshot &

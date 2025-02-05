@@ -1,0 +1,25 @@
+#!/usr/bin/bash
+
+thisFolder=$(dirname "$(realpath "$0")")
+echo "The script's directory is: ${thisFolder}"
+
+# Remove junk from dmenu
+[ -f "$thisFolder/src/dmenu/*.o" ] && rm $thisFolder/src/dmenu/*.o
+[ -f "$thisFolder/src/dmenu/config.h" ] && rm $thisFolder/src/dmenu/config.h
+[ -f "$thisFolder/src/dmenu/dmenu" ] && rm $thisFolder/src/dmenu/dmenu
+
+# Remove junk from dwm
+[ -f "$thisFolder/src/dwm/*.o" ] && rm $thisFolder/src/dwm/*.o
+[ -f "$thisFolder/src/dwm/config.h" ] && rm $thisFolder/src/dwm/config.h
+[ -f "$thisFolder/src/dwm/dwm" ] && rm $thisFolder/src/dwm/dwm
+
+# Remove junk from slock
+[ -f "$thisFolder/src/slock/*.o" ] && rm $thisFolder/src/slock/*.o
+[ -f "$thisFolder/src/slock/config.h" ] && rm $thisFolder/src/slock/config.h
+[ -f "$thisFolder/src/slock/slock" ] && rm $thisFolder/src/slock/slock
+
+# Remove junk from slstatus
+[ -f "$thisFolder/src/slstatus/components/*.o" ] && rm $thisFolder/src/slstatus/components/*.o
+[ -f "$thisFolder/src/slstatus/*.o" ] && rm $thisFolder/src/slstatus/*.o
+[ -f "$thisFolder/src/slstatus/config.h" ] && rm $thisFolder/src/slstatus/config.h
+[ -f "$thisFolder/src/slstatus/slstatus" ] && rm $thisFolder/src/slstatus/slstatus

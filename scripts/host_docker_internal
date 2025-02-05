@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Define the IP address and hostname to add
+IP_ADDRESS=$(hostname -I | cut -d' ' -f1)
+IP_ADDRESS_CONFIRM=$(ip route get 1 | awk '{print $(NF-2);exit}')
+HOSTNAME="host.docker.internal"
+ENTRY="$IP_ADDRESS $HOSTNAME"
+
+# Backup the original /etc/hosts
+sudo cp /etc/hosts /etc/hosts.bak
+
+# Check if IP_ADDRESS is correct
+if [ "$IP_ADDRESS" == "$IP_ADDRESS_CONFIRM" ]; then
+    # Check if the ENTRY already exists in /etc/hosts
+    if grep -q "$HOSTNAME" /etc/hosts; then
+        # If the hostname is found, check if the IP address needs to be updated
+        CURRENT_ENTRY=$(grep "$HOSTNAME" /etc/hosts)
+        if [ "$CURRENT_ENTRY" != "$ENTRY" ]; then
+            # Remove the old entry
+            sudo sed -i "/$HOSTNAME/d" /etc/hosts
+            # Add the new entry
+            echo "$ENTRY" | sudo tee -a /etc/hosts > /dev/null
+            echo "Updated /etc/hosts with $ENTRY"
+        else
+            echo "$ENTRY already exists in /etc/hosts"
+        fi
+    else
+        # If the hostname is not found, add the new entry
+        echo "$ENTRY" | sudo tee -a /etc/hosts > /dev/null
+        echo "Added $ENTRY to /etc/hosts"
+    fi
+else
+    echo "IP Addresses doesn't match."
+fi

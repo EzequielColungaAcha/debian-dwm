@@ -1,0 +1,24 @@
+#!/bin/bash
+
+COMMAND=$(xset -q | grep LED | awk '{ print $10 }')
+
+case "$COMMAND" in
+
+ "00001000"|"00001001"|"00001002") layout="latam" ;;
+
+ "00000000"|"00000001"|"00000002"|"00000003") layout="us" ;;
+
+  *) layout="??" ;;
+
+esac
+
+
+if [ "$layout" == "us" ]; then
+    xset -led named 'Caps Lock'
+    # Your logic for US layout
+elif [ "$layout" == "latam" ]; then
+    xset led named 'Caps Lock'
+    # Your logic for LATAM layout
+else
+    echo "Other layout: $layout"
+fi

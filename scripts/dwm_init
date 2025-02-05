@@ -1,0 +1,33 @@
+#!/usr/bin/bash
+
+export PATH=$HOME/.local/bin:$PATH
+
+[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
+display_notebook
+wal -R
+/usr/bin/xkbcomp ~/.keyboardAllowLedControlConf.xkb $DISPLAY &
+sleep 1
+/usr/bin/setxkbmap -layout us,latam -option "grp:caps_toggle" &
+
+echo "no" > $HOME/.cache/wmExit
+slstatus &
+picom &
+clipmenud &
+dunst &
+pasystray &
+flameshot &
+
+#systemctl status {systemd-networkd,systemd-resolved,networking,NetworkManager,systemd-hostnamed,openvpn} |egrep -v 'man:|http'
+#systemctl disable --now networking.service
+#systemctl restart NetworkManager.service
+
+wallpaperChangePywal
+# Path to the wmExit file
+wmExitFile="$HOME/.cache/wmExit"
+
+# Loop until the wmExit file contains 'no'
+while [ "$(cat $wmExitFile)" == "no" ]; do
+  # Execute DWM if the condition is met
+  exec dwm
+  sleep 1  # Sleep for a short time to avoid excessive CPU usage
+done

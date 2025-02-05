@@ -1,6 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>  // Include this header for bool type
 
 #include "../slstatus.h"
 #include "../util.h"
@@ -40,14 +41,54 @@
 	{
 		int cap_perc;
 		char path[PATH_MAX];
+		const char *battery_icon;
 
 		if (esnprintf(path, sizeof(path), POWER_SUPPLY_CAPACITY, bat) < 0)
 			return NULL;
 		if (pscanf(path, "%d", &cap_perc) != 1)
 			return NULL;
 
-		return bprintf("%d", cap_perc);
+		// Determine battery state (charging or discharging)
+		char state[12];
+		if (esnprintf(path, sizeof(path), POWER_SUPPLY_STATUS, bat) < 0)
+			return NULL;
+		if (pscanf(path, "%12[a-zA-Z ]", state) != 1)
+			return NULL;
+
+		// Check if battery is not charging
+		bool is_not_charging = (strcmp(state, "Discharging") == 0);
+
+		if (is_not_charging) {
+			// Not charging: Show an icon based on specific percentage thresholds
+			if (cap_perc > 95) battery_icon = "󰁹";  // Fully charged
+			else if (cap_perc > 85) battery_icon = "󰂂";
+			else if (cap_perc > 75) battery_icon = "󰂁";
+			else if (cap_perc > 65) battery_icon = "󰂀";
+			else if (cap_perc > 55) battery_icon = "󰁿";
+			else if (cap_perc > 45) battery_icon = "󰁾";
+			else if (cap_perc > 35) battery_icon = "󰁽";
+			else if (cap_perc > 25) battery_icon = "󰁼";
+			else if (cap_perc > 15) battery_icon = "󰁻";
+			else if (cap_perc > 5)  battery_icon = "󱃍";
+			else battery_icon = "󱉞";  // Very low
+		} else {
+			// Charging: Show an icon based on specific percentage thresholds
+			if (cap_perc > 95) battery_icon = "󰂅";  // Fully charged
+			else if (cap_perc > 85) battery_icon = "󰂋";
+			else if (cap_perc > 75) battery_icon = "󰂊";
+			else if (cap_perc > 65) battery_icon = "󰢞";
+			else if (cap_perc > 55) battery_icon = "󰂉";
+			else if (cap_perc > 45) battery_icon = "󰢝";
+			else if (cap_perc > 35) battery_icon = "󰂈";
+			else if (cap_perc > 25) battery_icon = "󰂇";
+			else if (cap_perc > 15) battery_icon = "󰂆";
+			else if (cap_perc > 5)  battery_icon = "󰢜";
+			else battery_icon = "󰢟";  // Very low
+		}
+
+		return bprintf("%s %d", battery_icon, cap_perc);
 	}
+
 
 	const char *
 	battery_state(const char *bat)

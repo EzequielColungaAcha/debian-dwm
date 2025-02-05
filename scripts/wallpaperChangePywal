@@ -2,7 +2,7 @@
 CURRENT_WALLPAPER=$(cat ~/.cache/wal/wal)
 while true
 do
-    WALLPAPER=$(find ~/.local/wallpapers -type f | shuf -n 1)
+    WALLPAPER=$(find ~/.local/wallpapers/ -type f | shuf -n 1)
     if [ $CURRENT_WALLPAPER != $WALLPAPER ]
     then
         wal -i $WALLPAPER
