@@ -143,7 +143,7 @@ lazyg() {
 bind '"\C-f":"zi\n"'
 
 
-alias hma='hasura migrate apply'
+alias hma='hasura migrate apply --database-name default'
 alias hsa='hasura seed apply'
 alias hmta='hasura metadata apply'
 alias hmtr='hasura metadata reload'

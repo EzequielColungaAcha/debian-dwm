@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=Slack
+Comment=Slack Web App
+Exec=google-chrome --profile-directory="Profile 1" --app="https://app.slack.com/client/T01BL7G9QKW/C02M9P1JWV6" --name=Slack --class=Slack
+Terminal=false
+Type=Application
+Icon=/home/ezziel/.local/share/icons/slack.svg
+Categories=GTK;DWM;
+StartupNotify=true
+MimeType=x-scheme-handler/slack;text/html;text/xml;application/xhtml_xml;

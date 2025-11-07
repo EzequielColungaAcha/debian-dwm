@@ -1,2 +1,3 @@
 #!/usr/bin/bash
-lerna clean -y && lerna bootstrap
+pnpm clean:all
+pnpm i

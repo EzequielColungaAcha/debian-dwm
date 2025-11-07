@@ -16,12 +16,16 @@ clipmenud &
 dunst &
 pasystray &
 flameshot &
+xss-lock -- slock &
+blueman-applet &
+battery-notify &
 
 #systemctl status {systemd-networkd,systemd-resolved,networking,NetworkManager,systemd-hostnamed,openvpn} |egrep -v 'man:|http'
 #systemctl disable --now networking.service
 #systemctl restart NetworkManager.service
 
 wallpaperChangePywal
+
 # Path to the wmExit file
 wmExitFile="$HOME/.cache/wmExit"
 
